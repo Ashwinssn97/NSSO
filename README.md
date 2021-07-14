@@ -78,3 +78,92 @@ milk_q_outliers_ind
 View(arp[cerealtot_q_outliers_ind,])                                    
 arp$milk_q
 
+
+
+
+
+#SCMA ASSIGNMENT2 NSSO
+rm(list = ls())
+data<-read.csv("d:/Desktop/4NSSO68.csv")
+
+## Arunachal Pradesh data
+data_Aruna<-subset(data,state==12)
+
+##  mean levels of consumptions in each division 
+district_mean<-aggregate(data_Aruna$fv_tot, list(data_Aruna$District), mean)
+colnames(district_mean)<-c("District","Mean")
+
+district_mean1<-aggregate(data_Aruna$sugartotal_v, list(data_Aruna$District), mean)
+colnames(district_mean)<-c("District","Mean")
+
+district_mean2<-aggregate(data_Aruna$ricetotal_q, list(data_Aruna$District), mean)
+colnames(district_mean)<-c("District","Mean")
+
+district_mean3<-aggregate(data_Aruna$milk_q, list(data_Aruna$District), mean)
+colnames(district_mean)<-c("District","Mean")
+
+district_mean4<-aggregate(data_Aruna$pulsestot_q, list(data_Aruna$District), mean)
+colnames(district_mean)<-c("District","Mean")
+
+
+
+data_Aruna$District<-as.factor(data_Aruna$District)
+library(ggplot2)
+p<-ggplot(data_Aruna, aes(x=District,y=fv_tot, color=District)) +
+  geom_boxplot()
+p
+
+q<-ggplot(data_Aruna, aes(x=District,y=sugartotal_v, color=District)) +
+  geom_boxplot()
+q
+
+r<-ggplot(data_Aruna, aes(x=District,y=ricetotal_q, color=District)) +
+  geom_boxplot()
+r
+
+s<-ggplot(data_Aruna, aes(x=District,y=milk_q, color=District)) +
+  geom_boxplot()
+s
+
+t<-ggplot(data_Aruna, aes(x=District,y=pulsestot_q, color=District)) +
+  geom_boxplot()
+t
+  
+
+model<-lm(fv_tot~District,data = data_Aruna)
+model1<-lm(sugartotal_v~District,data = data_Aruna)
+model2<-lm(ricetotal_q~District,data = data_Aruna)
+model3<-lm(milk_q~District,data = data_Aruna)
+model4<-lm(pulsestot_q~District,data = data_Aruna)
+
+summary(model)
+summary(model1)
+summary(model2)
+summary(model3)
+summary(model4)
+
+confint(model)
+confint(model1)
+confint(model2)
+confint(model3)
+confint(model4)
+
+# Compute the analysis of variance
+res.aov <- aov(fv_tot ~ District, data = data_Aruna)
+res.aov1 <- aov(sugartotal_v~ District, data = data_Aruna)
+res.aov2 <- aov(ricetotal_q ~ District, data = data_Aruna)
+res.aov3 <- aov(milk_q ~ District, data = data_Aruna)
+res.aov4 <- aov(pulsestot_q ~ District, data = data_Aruna)
+
+# Summary of the analysis
+summary(res.aov)
+summary(res.aov1)
+summary(res.aov2)
+summary(res.aov3)
+summary(res.aov4)
+
+TukeyHSD(res.aov)
+TukeyHSD(res.aov1)
+TukeyHSD(res.aov2)
+TukeyHSD(res.aov3)
+TukeyHSD(res.aov4)
