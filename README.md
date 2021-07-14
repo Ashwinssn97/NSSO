@@ -1,6 +1,6 @@
-# SCMA ASSIGNMENT1 (A) ASHWIN SREEDHAR V00999566
+# SCMA ASSIGNMENT A1 (A) ASHWIN SREEDHAR V00999566
 
-data=read.csv("d:/Desktop/4NSSO68.csv")
+data=read.csv("4NSSO68.csv")
 names(data)
 
 #SUBSETTING
@@ -77,3 +77,4 @@ milk_q_outliers_ind
 #Viewing the Outliers
 View(arp[cerealtot_q_outliers_ind,])                                    
 arp$milk_q
+
